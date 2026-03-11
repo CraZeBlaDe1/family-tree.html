@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Prophet Muhammad ﷺ — Family Tree</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a0a0a; color: #ccc; font-family: 'Segoe UI', sans-serif; padding: 24px 16px; min-height: 100vh; }
+h1 { font-family: Georgia, serif; color: #d4af37; font-size: clamp(24px, 5vw, 42px); text-shadow: 0 0 40px #d4af3755; }
+.header { text-align: center; margin-bottom: 32px; }
+.header .sub { font-size: 13px; color: #d4af37; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 8px; }
+.header .date { font-size: 13px; color: #666; margin-top: 8px; }
+.legend { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 12px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #888; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
+.tab { padding: 8px 20px; border-radius: 24px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.2s; background: #1a1a1a; color: #888; }
+.tab.active { background: #d4af37; color: #000; }
+.tab-content { max-width: 900px; margin: 0 auto; display: none; }
+.tab-content.active { display: block; }
+.section { margin-bottom: 32px; }
+.section-header { display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #333; padding-bottom: 8px; margin-bottom: 16px; cursor: pointer; user-select: none; }
+.section-title { font-size: 18px; font-weight: 700; font-family: Georgia, serif; }
+.section-toggle { margin-left: auto; color: #666; font-size: 12px; }
+.section-cards { display: flex; flex-wrap: wrap; gap: 8px; }
+.section-cards.hidden { display: none; }
+.card-wrapper { display: inline-block; vertical-align: top; }
+.card-btn { border-radius: 12px; padding: 10px 14px; cursor: pointer; min-width: 160px; max-width: 200px; text-align: center; transition: all 0.2s; border: 2px solid; background: none; display: block; width: 100%; }
+.card-btn.large { min-width: 260px; max-width: 320px; padding: 18px 24px; }
+.card-name { font-size: 15px; font-weight: 700; font-family: Georgia, serif; line-height: 1.2; }
+.card-btn.large .card-name { font-size: 22px; }
+.card-relation { font-size: 11px; color: #888; margin-top: 4px; }
+.card-badge { display: inline-block; margin-top: 6px; border-radius: 20px; padding: 2px 10px; font-size: 10px; font-weight: 600; }
+.card-hint { font-size: 10px; color: #666; margin-top: 4px; }
+.card-detail { border-radius: 10px; padding: 14px 16px; margin-top: 4px; max-width: 320px; text-align: left; font-size: 13px; color: #ccc; line-height: 1.6; border: 1px solid #333; background: #111; display: none; }
+.card-detail.open { display: block; }
+.detail-era { font-size: 11px; margin-bottom: 6px; }
+.detail-meta { color: #aaa; font-size: 11px; margin-bottom: 6px; }
+.note { border-radius: 12px; padding: 16px; margin-bottom: 24px; font-size: 13px; color: #999; line-height: 1.7; border: 1px solid #333; background: #111; }
+.prophet-center { text-align: center; margin: 24px 0; }
+.tip { background: #111; border: 1px solid #d4af3733; border-radius: 16px; padding: 20px; margin-bottom: 12px; text-align: center; font-size: 12px; color: #666; }
+.footer { text-align: center; margin-top: 40px; font-size: 11px; color: #444; padding-bottom: 24px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="sub">The Prophetic Lineage</div>
+  <h1>Prophet Muhammad ﷺ</h1>
+  <div class="date">570 – 632 CE &nbsp;•&nbsp; Makkah &amp; Madinah</div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#d4af37"></div> The Prophet ﷺ</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2d6a2d"></div> Righteous</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#6a2d2d"></div> Enemy of Islam</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#6a6a2d"></div> Complex / Disputed</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('tree',this)">🌳 Family Tree</button>
+  <button class="tab" onclick="showTab('wives',this)">💍 Wives</button>
+  <button class="tab" onclick="showTab('children',this)">👶 Children &amp; Grandchildren</button>
+</div>
+
+<!-- TREE TAB -->
+<div id="tab-tree" class="tab-content active">
+  <div class="tip">💡 Click any card to read about that person</div>
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('ancestors')" style="border-color:#8b7355">
+      <span>🏛️</span><span class="section-title" style="color:#8b7355">Distant Ancestors — The Noble Chain</span>
+      <span class="section-toggle" id="toggle-ancestors">▼ hide</span>
+    </div>
+    <div class="section-cards" id="section-ancestors"></div>
+  </div>
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('parents')" style="border-color:#6b8b6b">
+      <span>👴</span><span class="section-title" style="color:#6b8b6b">Grandparents &amp; Parents</span>
+      <span class="section-toggle" id="toggle-parents">▼ hide</span>
+    </div>
+    <div class="section-cards" id="section-parents"></div>
+  </div>
+  <div class="prophet-center" id="prophet-center"></div>
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('uncles')" style="border-color:#7b6b8b">
+      <span>🧑‍🤝‍🧑</span><span class="section-title" style="color:#7b6b8b">Uncles &amp; Aunts</span>
+      <span class="section-toggle" id="toggle-uncles">▼ hide</span>
+    </div>
+    <div class="section-cards" id="section-uncles"></div>
+  </div>
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('inlaws')" style="border-color:#5b7b8b">
+      <span>🤝</span><span class="section-title" style="color:#5b7b8b">Sons-in-Law</span>
+      <span class="section-toggle" id="toggle-inlaws">▼ hide</span>
+    </div>
+    <div class="section-cards" id="section-inlaws"></div>
+  </div>
+</div>
+
+<!-- WIVES TAB -->
+<div id="tab-wives" class="tab-content">
+  <div class="note" style="border-color:#d4af3744">
+    <strong style="color:#d4af37">Note on the Prophet's ﷺ marriages:</strong> Each marriage served a specific purpose — protecting widows, honoring tribes, building alliances, abolishing unjust customs, or divine command. Most of his wives were widows or divorcees. He lived monogamously with Khadijah for 25 years. His marriages after her were in his 50s and 60s — not driven by desire but by duty and mercy. All wives after Khadijah are honored as <em>"Mothers of the Believers"</em> — no Muslim may marry them.
+  </div>
+  <div class="section-cards" id="section-wives"></div>
+</div>
+
+<!-- CHILDREN TAB -->
+<div id="tab-children" class="tab-content">
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('kids')" style="border-color:#6b8b7b">
+      <span>👶</span><span class="section-title" style="color:#6b8b7b">Children of the Prophet ﷺ</span>
+      <span class="section-toggle" id="toggle-kids">▼ hide</span>
+    </div>
+    <div class="section-cards" id="section-kids"></div>
+  </div>
+  <div class="note" style="border-color:#6a2d2d44;background:#120808">
+    <strong style="color:#c47b7b">On his sons:</strong> All three sons died in infancy. Enemies mocked him as <em>"abtar"</em> — cut off with no male heir. Allah responded: <em>"Indeed it is your enemy who is cut off."</em> (Surah Al-Kawthar 108:3). The Prophet's ﷺ lineage continues through Fatimah to this day, and billions call themselves Muslim. His mockers are forgotten.
+  </div>
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('grandkids')" style="border-color:#8b7b5b">
+      <span>⭐</span><span class="section-title" style="color:#8b7b5b">Grandchildren</span>
+      <span class="section-toggle" id="toggle-grandkids">▼ hide</span>
+    </div>
+    <div class="section-cards" id="section-grandkids"></div>
+  </div>
+  <div class="note" style="border-color:#2d6a2d44;background:#081208">
+    <strong style="color:#7bc47b">The living lineage:</strong> People who descend from the Prophet ﷺ through Hasan and Husayn are called <strong style="color:#7bc47b">Sayyids</strong> or <strong style="color:#7bc47b">Sharifs</strong>. There are millions worldwide. The King of Jordan and the King of Morocco both claim this lineage. DNA studies have traced a distinct Hashimite genetic marker through these family lines.
+  </div>
+</div>
+
+<div class="footer">May Allah's peace and blessings be upon him, his family, and all his companions</div>
+
+<script>
+const S = {
+  prophet:{ bg:'#1a1a2e',border:'#d4af37',text:'#d4af37',badge:'#d4af37',badgeText:'#1a1a2e',label:'The Prophet ﷺ'},
+  good:   { bg:'#0d1f0d',border:'#2d6a2d',text:'#7bc47b',badge:'#2d6a2d',badgeText:'#c8f7c8',label:'Righteous'},
+  bad:    { bg:'#1f0d0d',border:'#6a2d2d',text:'#c47b7b',badge:'#6a2d2d',badgeText:'#f7c8c8',label:'Enemy of Islam'},
+  neutral:{ bg:'#1a1a0d',border:'#6a6a2d',text:'#c4c47b',badge:'#6a6a2d',badgeText:'#f7f7c8',label:'Complex / Disputed'}
+};
+
+const ANCESTORS = [
+  {name:'Adnan',relation:'Distant Ancestor',era:'Ancient',status:'good',desc:'Traced lineage of Arab tribes. All noble Arab lineages connect through him. The Prophet\'s ﷺ lineage is considered the most honored chain in human history.'},
+  {name:"Ma'ad",relation:'Son of Adnan',era:'Ancient',status:'good',desc:'From whom the Adnani Arabs descend. Carrier of the prophetic lineage forward through history.'},
+  {name:'Fihr (Quraysh)',relation:'Ancestor — several generations above',era:'Ancient',status:'good',desc:'Known as Quraysh — the entire tribe takes its name from him. Being Qurayshi was the highest tribal honour in Arabia.'},
+  {name:'Kilab',relation:'Great-great-great-grandfather',era:'Ancient',status:'good',desc:'Respected ancestor, part of the noble Qurayshi chain leading directly to the Prophet ﷺ.'},
+  {name:'Qusayy',relation:'Great-great-grandfather',era:'400s CE',status:'good',desc:'The man who reunified the Quraysh and took custodianship of the Kaaba. A great leader and statesman — he elevated the Quraysh to dominance in Makkah.'},
+  {name:'Abd Manaf',relation:'Great-grandfather',era:'400s CE',status:'good',desc:'Son of Qusayy. From him descend the most honoured branches of Quraysh, including the Hashimites.'},
+  {name:'Hashim',relation:'Great-grandfather',era:'~464–497 CE',status:'good',desc:"Founded the Hashimite clan — the most honoured clan in Arabia. He initiated the trade caravans of summer and winter mentioned in Surah Quraysh (106). A generous, respected leader who fed the poor. He died in Gaza, Palestine. The Prophet's ﷺ family takes the name Banu Hashim from him."},
+  {name:'Abd al-Muttalib',relation:'Grandfather',era:'~497–578 CE',status:'good',desc:"Chief of Makkah and guardian of the Kaaba. He rediscovered the Well of Zamzam through a divine dream. He stood firm when Abraha came with elephants to destroy the Kaaba — Allah destroyed Abraha's army (Surah Al-Fil). He raised the Prophet ﷺ after his parents died with immense love. He died when the Prophet ﷺ was only 8 years old."}
+];
+
+const PARENTS = [
+  {name:'Abdullah',relation:'Father',era:'~545–570 CE',status:'good',desc:"The Prophet's ﷺ father. Known as the most handsome man in Makkah. He died before the Prophet ﷺ was born — on a trade journey to Madinah. He never met his son. The Prophet ﷺ loved him deeply. He died young, around 25 years old. His grave is in Madinah."},
+  {name:'Aminah bint Wahb',relation:'Mother',era:'~549–577 CE',status:'good',desc:"The Prophet's ﷺ mother — from the Banu Zuhra clan. Described as the most noble woman of Quraysh in lineage and character. She raised the Prophet ﷺ until age 6, then died in a village called Abwa between Makkah and Madinah while returning from visiting her husband Abdullah's grave. The Prophet ﷺ visited her grave later in life and wept."},
+  {name:'Abd al-Muttalib',relation:'Grandfather — raised the Prophet ﷺ',era:'~497–578 CE',status:'good',desc:"Chief of Makkah and guardian of the Kaaba. He rediscovered the Well of Zamzam through a divine dream. He stood firm when Abraha came with elephants to destroy the Kaaba — Allah destroyed Abraha's army (Surah Al-Fil). He raised the Prophet ﷺ from age 6 with immense love after both parents were gone. He died when the Prophet ﷺ was only 8."}
+];
+
+const PROPHET = {
+  name:'Muhammad ﷺ',relation:'The Prophet of Allah',era:'570–632 CE',status:'prophet',
+  desc:"Born in Makkah on Monday 12 Rabi al-Awwal, 570 CE — the Year of the Elephant. Orphaned young — father died before his birth, mother when he was 6. Raised by grandfather Abd al-Muttalib then uncle Abu Talib. Known before prophethood as Al-Amin — The Trustworthy. First revelation at age 40 in 610 CE. Migrated to Madinah in 622 CE (the Hijra). Died Monday 12 Rabi al-Awwal, 632 CE in Madinah aged 63. Buried where he died — under what is now the Green Dome in Masjid an-Nabawi."
+};
+
+const UNCLES = [
+  {name:'Abu Talib',relation:'Uncle — Guardian of the Prophet ﷺ',era:'~535–619 CE',status:'neutral',desc:"The Prophet's ﷺ most important uncle and protector for 42 years. He raised the Prophet ﷺ from age 8 alongside his own children. He defended him publicly and never allowed the Quraysh to harm him. Without Abu Talib, the Prophet ﷺ may not have survived the early mission. HOWEVER — he died without accepting Islam. The Prophet ﷺ tried desperately at his deathbed but Abu Talib died saying he was on the religion of his ancestors. This broke the Prophet's ﷺ heart. His death is called part of the Year of Sorrow."},
+  {name:'Hamza ibn Abd al-Muttalib',relation:'Uncle — Lion of Allah',era:'~568–625 CE',status:'good',desc:"One of the greatest heroes of Islam. Accepted Islam powerfully after striking Abu Jahl for insulting the Prophet ﷺ. A fierce warrior who terrified the Quraysh. Martyred at the Battle of Uhud by a spear thrown by Wahshi — hired by Hind bint Utba who then mutilated his body. The Prophet ﷺ wept over him more than any other martyr. Given the titles Sayyid al-Shuhada (Master of Martyrs) and Lion of Allah."},
+  {name:'Abbas ibn Abd al-Muttalib',relation:'Uncle',era:'~566–653 CE',status:'good',desc:"Initially remained on his ancestral religion but secretly admired the Prophet ﷺ. Accepted Islam before the conquest of Makkah. The entire Abbasid Caliphate (750–1258 CE) — which ruled the Islamic world for 500 years — descends from him. He lived to 88 years old. The Prophet ﷺ honoured him greatly."},
+  {name:'Abu Lahab',relation:'Uncle — Enemy of Islam',era:'~549–624 CE',status:'bad',desc:"The only person condemned by name in the Quran — in Surah Al-Masad (111). His real name was Abd al-Uzza. He was the Prophet's ﷺ neighbour and actively led the persecution of Muslims. His wife Umm Jamil carried thorns to throw in the Prophet's ﷺ path. He died of grief and shame 7 days after the Battle of Badr when he heard of the Quraysh's defeat. His family left his body for days out of fear of the disease he died from."},
+  {name:'Safiyyah bint Abd al-Muttalib',relation:'Aunt',era:'~567–640 CE',status:'good',desc:"The Prophet's ﷺ aunt and a fierce Muslim. She accepted Islam early. At the Battle of Uhud, she was the only woman who stood firm and fought to protect the Prophet ﷺ. She is also the mother of Zubayr ibn al-Awwam — one of the ten companions promised Paradise. A poet and a warrior."}
+];
+
+const INLAWS = [
+  {name:'Ali ibn Abi Talib',relation:'Son-in-Law & Cousin',era:'~600–661 CE',status:'good',desc:"The Prophet's ﷺ cousin — son of Abu Talib. He accepted Islam as a child — the first youth to become Muslim. He slept in the Prophet's ﷺ bed the night of Hijra to deceive the assassins. Married Fatimah. Father of Hasan and Husayn. Fourth Caliph of Islam. One of the greatest scholars, warriors, and spiritual figures in Islamic history. The Shia consider him the rightful first successor. He was martyred while praying Fajr — struck by a poisoned sword by Ibn Muljam in Kufa. His final words: 'By the Lord of the Kaaba, I have succeeded.' Called Asadullah — Lion of Allah."},
+  {name:'Uthman ibn Affan',relation:'Son-in-Law — married Ruqayyah, then Umm Kulthum',era:'~576–656 CE',status:'good',desc:"Third Caliph of Islam. One of the wealthiest men in Arabia who spent his entire fortune for Islam. He equipped a whole army single-handedly (the Army of Difficulty). He compiled and standardised the Quran — every Quran on Earth today traces back to him. Known for extraordinary modesty and generosity. Martyred at age 80 while reading the Quran. Called Dhu al-Nurayn — Possessor of Two Lights — for marrying two daughters of the Prophet ﷺ."}
+];
+
+const WIVES = [
+  {name:'Khadijah bint Khuwaylid',num:1,married:'595 CE',era:'~555–619 CE',status:'good',kids:['Qasim','Abdullah','Zaynab','Ruqayyah','Umm Kulthum','Fatimah'],desc:"The greatest of all his wives — confirmed by the Prophet ﷺ himself. A wealthy, respected businesswoman who employed the Prophet ﷺ and then proposed to him. She was 40, he was 25. She was the FIRST Muslim — before any man. When the first revelation came and he was terrified, she held him and said 'Allah will never disgrace you.' She supported him with her entire wealth. The Prophet ﷺ never stopped speaking of her with love. She gave him all his children except Ibrahim. The year she died is called the Year of Sorrow."},
+  {name:"Sawdah bint Zam'ah",num:2,married:'619 CE',era:'unknown–674 CE',status:'good',kids:[],desc:"A widow who had suffered greatly — her first husband died after emigrating to Abyssinia. The Prophet ﷺ married her to honour and protect her. She was known for her generosity and humour. She later gave her night with the Prophet ﷺ to Aisha out of love. Lived simply and devoted herself to worship."},
+  {name:'Aisha bint Abi Bakr',num:3,married:'623 CE',era:'~613–678 CE',status:'good',kids:[],desc:"The Prophet's ﷺ most beloved wife after Khadijah. Daughter of Abu Bakr. Extraordinarily intelligent — she became one of the greatest Islamic scholars in history. She narrated over 2,000 hadiths. The Prophet ﷺ died in her arms, in her room, on her day. He is buried in her room. After his death she taught Islam for 44 years. The Prophet ﷺ called her Humayra — the rosy-cheeked one. Her innocence in the incident of the Ifk (false accusation) was declared directly by Allah in Surah An-Nur."},
+  {name:'Hafsah bint Umar',num:4,married:'625 CE',era:'~605–665 CE',status:'good',kids:[],desc:"Daughter of Umar ibn al-Khattab. A widow — her husband died from wounds at the Battle of Badr. Known for frequent fasting and night prayers. The original compiled Quran manuscript (Abu Bakr's copy) was kept in her custody — showing her status as a trusted guardian of Islam's most sacred text."},
+  {name:'Zaynab bint Khuzaymah',num:5,married:'625 CE',era:'~595–625 CE',status:'good',kids:[],desc:"Called Umm al-Masakin — Mother of the Poor — for her extraordinary generosity to the needy. She was a widow whose husband was martyred at Uhud. She died only 2–3 months after marrying the Prophet ﷺ. She is one of only two wives who died during his lifetime (the other being Khadijah)."},
+  {name:'Umm Salamah (Hind bint Abi Umayyah)',num:6,married:'626 CE',era:'~596–683 CE',status:'good',kids:[],desc:"A widow whose husband died from Uhud wounds. One of the earliest Muslims — she emigrated to Abyssinia. When her husband died she made a beautiful du'a: 'O Allah, reward me in my affliction and replace it with something better.' Her something better was marrying the Prophet ﷺ. Known for her wisdom — the Prophet ﷺ took her counsel at the treaty of Hudaybiyyah. Lived to approximately 84 years."},
+  {name:'Zaynab bint Jahsh',num:7,married:'627 CE',era:'~590–641 CE',status:'good',kids:[],desc:"The Prophet's ﷺ cousin. Her marriage came after her divorce from Zayd ibn Haritha and was commanded directly by Allah to abolish the pre-Islamic custom that treated adopted sons as biological sons. She would say to the other wives: 'Your families married you to him, but Allah married me to him from above seven heavens.' Referenced in Surah Al-Ahzab 33:37."},
+  {name:'Juwayriyyah bint al-Harith',num:8,married:'628 CE',era:'~608–673 CE',status:'good',kids:[],desc:"Daughter of the chief of Banu Mustaliq. When the Prophet ﷺ married her, the companions immediately freed all captives from her tribe out of respect for the Prophet's ﷺ wife's family. Aisha said: 'No woman was a greater blessing to her people than Juwayriyyah.' Her marriage freed an entire tribe and brought them to Islam."},
+  {name:'Umm Habibah (Ramlah bint Abi Sufyan)',num:9,married:'628 CE',era:'~589–666 CE',status:'good',kids:[],desc:"Daughter of Abu Sufyan — the leader of the Quraysh and Islam's greatest enemy at the time. An early Muslim who emigrated to Abyssinia, where her husband apostated. She refused to leave Islam despite being alone and widowed in a foreign land. The king of Abyssinia conducted her marriage to the Prophet ﷺ on his behalf. When her father came to Madinah later, she refused to let him sit on the Prophet's ﷺ mat. Her faith was iron."},
+  {name:'Safiyyah bint Huyayy',num:10,married:'629 CE',era:'~610–670 CE',status:'good',kids:[],desc:"A Jewish woman of noble lineage — descended from Prophet Harun (Aaron). Her father and husband were killed in the Battle of Khaybar. The Prophet ﷺ freed her and offered her the choice: return to her people or become his wife. She chose Islam and marriage. The Prophet ﷺ defended her from prejudice and told her to say: 'My father is Harun, my uncle is Musa, and my husband is Muhammad ﷺ — what do they have over me?'"},
+  {name:'Maymunah bint al-Harith',num:11,married:'629 CE',era:'~594–672 CE',status:'good',kids:[],desc:"The last woman the Prophet ﷺ married. A widow known for her piety. She lived the longest of all the wives after the Prophet's ﷺ death — dying around age 80. Ibn Abbas (the great Quranic scholar) was her nephew and learned much from her. She narrated hadiths and taught Islam for decades after the Prophet ﷺ passed."}
+];
+
+const CHILDREN = [
+  {name:'Al-Qasim',relation:'Son — Mother: Khadijah',era:'Son',status:'good',desc:"The Prophet's ﷺ firstborn son. He is the reason the Prophet ﷺ was given the kunya Abu al-Qasim (Father of Qasim). He died in infancy — less than 2 years old. In pre-Islamic Arabia, the death of sons was seen as shameful. Allah revealed Surah Al-Kawthar partly in response to those who mocked the Prophet ﷺ for having no surviving sons."},
+  {name:'Zaynab',relation:'Daughter — Mother: Khadijah',era:'Daughter',status:'good',desc:"The eldest daughter. Married Abul-As ibn al-Rabi, a non-Muslim who initially opposed Islam. She suffered greatly — when emigrating to Madinah she was attacked and miscarried. Her husband eventually accepted Islam after she sheltered him. She died in 8 AH. The Prophet ﷺ described her as his best daughter in terms of the trials she endured."},
+  {name:'Ruqayyah',relation:'Daughter — Mother: Khadijah',era:'Daughter',status:'good',desc:"Married Uthman ibn Affan — the third Caliph of Islam. She emigrated to Abyssinia with him, then to Madinah. She fell gravely ill before the Battle of Badr. Uthman stayed to care for her rather than join the battle. She died the very day the news of Badr's victory arrived. Her death devastated the Prophet ﷺ."},
+  {name:'Umm Kulthum',relation:'Daughter — Mother: Khadijah',era:'Daughter',status:'good',desc:"After Ruqayyah died, the Prophet ﷺ gave Umm Kulthum in marriage to Uthman — making Uthman the only man in history to marry two daughters of a prophet. She died in 9 AH without children. Uthman was known as Dhu al-Nurayn — Possessor of Two Lights — for this honour."},
+  {name:'Fatimah al-Zahra',relation:'Daughter — Mother: Khadijah',era:'Daughter',status:'good',desc:"The Prophet's ﷺ most beloved child — his youngest and the only one whose lineage continues to this day. Called al-Zahra (The Radiant) and Sayyidat Nisa al-Alamin (Leader of the Women of All Worlds). Married Ali ibn Abi Talib. Mother of Hasan and Husayn — through whom the entire Prophetic lineage continues. The Prophet ﷺ said: 'Fatimah is a part of me — whoever angers her angers me.' She died 6 months after the Prophet ﷺ, still deep in grief."},
+  {name:'Abdullah (al-Tayyib)',relation:'Son — Mother: Khadijah',era:'Son',status:'good',desc:"The Prophet's ﷺ second son, also called al-Tayyib (the Good) and al-Tahir (the Pure). He died in infancy. The repeated death of his sons was used by enemies to mock him — claiming his lineage would be cut off. Allah answered in Surah Al-Kawthar: it is the mocker whose lineage is cut off, not the Prophet ﷺ."},
+  {name:'Ibrahim',relation:'Son — Mother: Maria al-Qibtiyyah',era:'Son',status:'good',desc:"Born to Maria al-Qibtiyyah — a Coptic Christian gift from the ruler of Egypt. His birth brought the Prophet ﷺ immense joy. He died at 16–18 months old. The day Ibrahim died there was a solar eclipse. Some companions said Allah caused it for Ibrahim. The Prophet ﷺ corrected them: 'The sun and moon do not eclipse for the death or life of anyone — they are signs of Allah.' He wept and said: 'The eye weeps and the heart grieves, and we say only what pleases our Lord. O Ibrahim, we are grieved by your departure.'"}
+];
+
+const GRANDCHILDREN = [
+  {name:'Hasan ibn Ali',relation:'Grandson — Son of Fatimah & Ali',era:'~624–670 CE',status:'good',desc:"The Prophet's ﷺ first grandson and most beloved. The Prophet ﷺ would interrupt his sermon to pick him up when he stumbled. He said: 'Hasan and Husayn are the masters of the youth of Paradise.' Hasan became the 5th Caliph after Ali's death. He abdicated to avoid civil war — an act the Prophet ﷺ had predicted: 'This son of mine is a master and through him Allah will reconcile two large groups of Muslims.' He was likely poisoned at age 45. His forbearance was legendary."},
+  {name:'Husayn ibn Ali',relation:'Grandson — Son of Fatimah & Ali',era:'~626–680 CE',status:'good',desc:"'Husayn is from me and I am from Husayn' — the Prophet ﷺ said. His death at the Battle of Karbala (680 CE) is one of the most significant events in Islamic history. He stood against the tyranny of Yazid ibn Muawiyah with 72 companions against thousands. He was martyred on the 10th of Muharram (Ashura). His stand is the eternal symbol of truth against oppression. Even Sunni scholars consider his cause just and his death a tragedy. He is buried in Karbala, Iraq."},
+  {name:'Zaynab bint Ali',relation:'Granddaughter — Daughter of Fatimah & Ali',era:'~626–682 CE',status:'good',desc:"Daughter of Ali and Fatimah — granddaughter of the Prophet ﷺ. She witnessed and survived the massacre of Karbala. After Husayn's martyrdom she was taken captive to Damascus. Her speech before Yazid's court — fearless, eloquent, devastating — is considered one of the greatest speeches in Islamic history. She preserved the story of Karbala and ensured it was never forgotten. Called Aqilat Banu Hashim — the Wise Woman of Banu Hashim."}
+];
+
+// ─── CARD BUILDER ────────────────────────────────────────────────────────────
+let uid = 0;
+function card(p, large) {
+  const s = S[p.status];
+  const id = 'c' + (uid++);
+  let meta = '';
+  if (p.era && p.era !== 'Son' && p.era !== 'Daughter')
+    meta += `<div class="detail-era" style="color:${s.text}">📅 ${p.era}</div>`;
+  if (p.married) meta += `<div class="detail-meta">💍 Married: ${p.married}</div>`;
+  if (p.kids && p.kids.length) meta += `<div class="detail-meta">👶 Children: ${p.kids.join(', ')}</div>`;
+
+  return `<div class="card-wrapper">
+    <button class="card-btn${large?' large':''}" id="${id}"
+      style="background:${s.bg};border-color:${s.border}"
+      onclick="toggleCard('${id}')">
+      <div class="card-name" style="color:${s.text}">${p.name}</div>
+      <div class="card-relation">${p.relation||''}</div>
+      <div class="card-badge" style="background:${s.badge};color:${s.badgeText}">${s.label}</div>
+      <div class="card-hint" id="${id}h">▼ tap to read</div>
+    </button>
+    <div class="card-detail" id="${id}d" style="border-color:${s.border}44">
+      ${meta}<div>${p.desc}</div>
+    </div>
+  </div>`;
+}
+
+function fill(id, arr, large) {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = arr.map(p => card(p, large)).join('');
+}
+
+// ─── POPULATE ─────────────────────────────────────────────────────────────────
+fill('section-ancestors', ANCESTORS);
+fill('section-parents',   PARENTS);
+fill('section-uncles',    UNCLES);
+fill('section-inlaws',    INLAWS);
+fill('section-wives',     WIVES.map((w,i)=>({...w,relation:ordinal(i+1)+' Wife'})));
+fill('section-kids',      CHILDREN);
+fill('section-grandkids', GRANDCHILDREN);
+document.getElementById('prophet-center').innerHTML = card(PROPHET, true);
+
+function ordinal(n){ return n+(['st','nd','rd'][n-1]||'th'); }
+
+// ─── INTERACTIONS ─────────────────────────────────────────────────────────────
+function toggleCard(id) {
+  const d = document.getElementById(id+'d');
+  const h = document.getElementById(id+'h');
+  const open = d.classList.toggle('open');
+  h.textContent = open ? '▲ close' : '▼ tap to read';
+}
+
+function toggleSection(key) {
+  const cards  = document.getElementById('section-'+key);
+  const toggle = document.getElementById('toggle-'+key);
+  const hidden = cards.classList.toggle('hidden');
+  toggle.textContent = hidden ? '▶ show' : '▼ hide';
+}
+
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
